@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "ootest/ootest.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "test",
+      "args": [
+        "test",
+        "${workspaceFolder}/testprojectfolder/testprojectname.csproj"
+      ],
+      "group": "test",  
+      "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+      },
+      "type": "shell",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
