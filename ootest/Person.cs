@@ -7,22 +7,11 @@ using System.Linq;
         Abstrakt klasse
         Indkapsling af data
         Adgang via accessors
+        virtual => dynamisk dispatch
 */
 
 namespace ootest
 {
-
-    // Alias
-    public class Children : List<Person>
-    {
-        public Children() : base() { }
-        public Children(Person p) : base(new Person[] { p }) { }
-        public Children(Person[] p) : base(p) { }
-
-    }
-
-
-
     abstract public class Person
     {
         private int _age;
@@ -69,6 +58,27 @@ namespace ootest
         {
             var t = this.averageAgeHelper();
             return (float)t.Item2 / (float)t.Item1;
+        }
+
+        protected T topDown<T>(Func<Person, T> nodeHandler, Func<T, T, T> fold)
+        {
+            T res = nodeHandler(this);
+            foreach (var c in this._children)
+            {
+                res = fold(res, c.topDown<T>(nodeHandler, fold));
+            }
+            return res;
+        }
+
+        public List<string> familyDescription2() => topDown<List<string>>(
+            nodeHandler: p => new List<string>(new string[] { p.description() }),
+            fold: (l1, l2) => l1.Concat(l2).ToList()
+            );
+
+        public int count() => topDown<int>(nodeHandler: p => 1, fold: (x,y) => x+y);
+        public int ageSum() => topDown<int>(nodeHandler: p => p._age, fold: (x,y) => x+y);
+        public float averageAge2() {
+            return (float)this.ageSum() / (float)this.count();
         }
 
     }
