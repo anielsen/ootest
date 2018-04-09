@@ -74,9 +74,7 @@ namespace ootest
 
         public int count() => traversal<int>(nodeHandler: p => 1, fold: (x,y) => x+y);
         public int ageSum() => traversal<int>(nodeHandler: p => p._age, fold: (x,y) => x+y);
-        public float averageAge2() {
-            return (float)this.ageSum() / (float)this.count();
-        }
+        public float averageAge2() => (float)this.ageSum() / (float)this.count();
 
     }
 }
