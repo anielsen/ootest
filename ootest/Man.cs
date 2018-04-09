@@ -10,6 +10,10 @@ namespace ootest
 
         public Man(int age, string name, string favTeam) : base(age, name) => _favTeam = favTeam;
 
+        public string chant() {
+            return "Kom så "+this._favTeam;
+        }
+
         public override string description() => base.description() + " follows " + this._favTeam;
     }
 }
