@@ -9,9 +9,6 @@ namespace ootest
         public Woman(int age, string name, Children children, int shoeSize) : base(age, name, children) => _shoeSize = shoeSize;
         public Woman(int age, string name, int shoeSize) : base(age, name) => _shoeSize = shoeSize;
 
-        public override string description()
-        {
-            return base.description() + " size " + this._shoeSize;
-        }
+        public override string description() => base.description() + " size " + this._shoeSize;
     }
 }

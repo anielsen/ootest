@@ -26,10 +26,7 @@ namespace ootest
         }
         public Person(int age, string name) : this(age, name, new Children()) { }
 
-        public virtual string description()
-        {
-            return this._name;
-        }
+        public virtual string description() => this._name;
 
         public List<string> familyDescription()
         {
@@ -41,7 +38,7 @@ namespace ootest
             return res;
         }
 
-        protected Tuple<int, int> averageAgeHelper()
+        protected (int count, int ageSum) averageAgeHelper()
         {
             int count = 1;
             int ageSum = this._age;
@@ -51,32 +48,32 @@ namespace ootest
                 count += recursiveResult.Item1;
                 ageSum += recursiveResult.Item2;
             }
-            return Tuple.Create(count, ageSum);
+            return (count, ageSum);
         }
 
         public float averageAge()
         {
-            var t = this.averageAgeHelper();
-            return (float)t.Item2 / (float)t.Item1;
+            var (count, ageSum) = this.averageAgeHelper();
+            return (float)ageSum / (float)count;
         }
 
-        protected T topDown<T>(Func<Person, T> nodeHandler, Func<T, T, T> fold)
+        protected T traversal<T>(Func<Person, T> nodeHandler, Func<T, T, T> fold)
         {
             T res = nodeHandler(this);
             foreach (var c in this._children)
             {
-                res = fold(res, c.topDown<T>(nodeHandler, fold));
+                res = fold(res, c.traversal<T>(nodeHandler, fold));
             }
             return res;
         }
 
-        public List<string> familyDescription2() => topDown<List<string>>(
+        public List<string> familyDescription2() => traversal<List<string>>(
             nodeHandler: p => new List<string>(new string[] { p.description() }),
             fold: (l1, l2) => l1.Concat(l2).ToList()
             );
 
-        public int count() => topDown<int>(nodeHandler: p => 1, fold: (x,y) => x+y);
-        public int ageSum() => topDown<int>(nodeHandler: p => p._age, fold: (x,y) => x+y);
+        public int count() => traversal<int>(nodeHandler: p => 1, fold: (x,y) => x+y);
+        public int ageSum() => traversal<int>(nodeHandler: p => p._age, fold: (x,y) => x+y);
         public float averageAge2() {
             return (float)this.ageSum() / (float)this.count();
         }
