@@ -25,7 +25,8 @@ namespace ootest
             Person Aslan = new Man(11, "Aslan", "Avarta");
             Person Lonni = new Woman(42, "Lonni", new Children(new Person[] { Aslan, Sif, Martinus, Alvin }), 38);
 
-            Person Lene = new Woman(70, "Lene", new Children(new Person[] { Anders }), 37);
+            Person Gitte = new Woman(44, "Gitte", 36);
+            Person Lene = new Woman(70, "Lene", new Children(new Person[] { Anders, Gitte }), 37);
 
             Console.WriteLine("Anders:");
             Console.WriteLine(Anders.description());
@@ -34,7 +35,7 @@ namespace ootest
             {
                 Console.WriteLine(s);
             }
-            Console.WriteLine("Lene gennemsnitsalder i familie: " + Lene.averageAge());
+            Console.WriteLine("Lene: Gennemsnitsalder i familie: " + Lene.averageAge());
         }
     }
 }
