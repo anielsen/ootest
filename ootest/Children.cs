@@ -7,7 +7,6 @@ namespace ootest
     public class Children : List<Person>
     {
         public Children() : base() { }
-        public Children(Person p) : base(new Person[] { p }) { }
         public Children(Person[] p) : base(p) { }
 
     }
